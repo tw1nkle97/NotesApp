@@ -1,5 +1,3 @@
-# notes application with the ability to save / edit / read / add / delete notes. The note must contain an ID, a title, a note body, and a date.
-
 import csv
 import datetime
 
@@ -25,20 +23,42 @@ def add_note():
 
 
 def read_note():
-    notes = []
-    with open("NotesApp/notes.csv", "r") as file:
-        reader = csv.reader(file, delimiter=';')
-        for row in reader:
-            notes.append(row)
+    print('\nВыберите действие')
+    print('1. Вывести заметку по id')
+    print('2. Вывести все заметки')
+    
+    choose = input('Введите номер пункта: ')
+    if choose == '1':
+        note_id = input('Введите ID заметкки: ')
+        notes = []
+        with open("NotesApp/notes.csv", "r") as file:
+            reader = csv.reader(file, delimiter=';')
+            for row in reader:
+                notes.append(row)
 
-    sort_choice = input('Хотите ли вы отсортировать заметки по дате? (да/нет): ').lower()
-    if sort_choice == 'да':
-        date_format = "%d/%m/%Y %H:%M:%S"
-        notes = sorted(notes[1:], key=lambda x: datetime.datetime.strptime(x[3], date_format))
-        notes.insert(0, ['id', 'Title', 'Body', 'Date&Time'])
+        found = False
+        for note in notes:
+            if note[0] == note_id:
+                found = True
+                print(note)
 
-    for row in notes:
-        print(row)
+        if not found:
+            print('Заметка с таким ID не найдена.')
+    else:
+        notes = []
+        with open("NotesApp/notes.csv", "r") as file:
+            reader = csv.reader(file, delimiter=';')
+            for row in reader:
+                notes.append(row)
+
+        sort_choice = input('Хотите ли вы отсортировать заметки по дате? (да/нет): ').lower()
+        if sort_choice == 'да':
+            date_format = "%d/%m/%Y %H:%M:%S"
+            notes = sorted(notes[1:], key=lambda x: datetime.datetime.strptime(x[3], date_format))
+            notes.insert(0, ['id', 'Title', 'Body', 'Date&Time'])
+
+        for row in notes:
+            print(row)
 
 
 def edit_note():
