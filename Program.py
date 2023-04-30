@@ -5,8 +5,9 @@ import datetime
 
 
 def add_note():
+    fieldnames = ['id', 'Title', 'Body', 'Date&Time']
     with open('NotesApp/notes.csv', mode='r') as file:
-        reader = csv.DictReader(file)
+        reader = csv.DictReader(file, fieldnames=fieldnames, delimiter=';')
         last_row = None
         for row in reader:
             last_row = row
@@ -28,9 +29,6 @@ def read_note():
         reader = csv.reader(file, delimiter=';')
         for row in reader:
             print(row)
-
-
-
 
 add_note()
 read_note()
