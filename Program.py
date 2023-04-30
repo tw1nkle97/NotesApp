@@ -16,7 +16,7 @@ def add_note():
             last_id = 0
         note_id = last_id + 1
     with open("NotesApp/notes.csv", "a", newline='') as file:
-        writer = csv.writer(file, delimiter=',')  # Use the same delimiter for reading and writing
+        writer = csv.writer(file, delimiter=';')
         note_title = input('Заголовок: ')
         note_body = input('Заметка: ')
         note_date = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -25,7 +25,7 @@ def add_note():
 
 def read_note():
     with open("NotesApp/notes.csv", "r") as file:
-        reader = csv.reader(file, delimiter=',')  # Use the same delimiter for reading and writing
+        reader = csv.reader(file, delimiter=';')
         for row in reader:
             print(row)
 
