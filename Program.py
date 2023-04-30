@@ -25,10 +25,20 @@ def add_note():
 
 
 def read_note():
+    notes = []
     with open("NotesApp/notes.csv", "r") as file:
         reader = csv.reader(file, delimiter=';')
         for row in reader:
-            print(row)
+            notes.append(row)
+
+    sort_choice = input('Хотите ли вы отсортировать заметки по дате? (да/нет): ').lower()
+    if sort_choice == 'да':
+        date_format = "%d/%m/%Y %H:%M:%S"
+        notes = sorted(notes[1:], key=lambda x: datetime.datetime.strptime(x[3], date_format))
+        notes.insert(0, ['id', 'Title', 'Body', 'Date&Time'])
+
+    for row in notes:
+        print(row)
 
 
 def edit_note():
@@ -45,13 +55,16 @@ def edit_note():
         if note[0] == note_id:
             found = True
             print(f'Заголовок: {note[1]}')
-            print(f'Тело заметки: {note[2]}')
+            print(f'Заметка: {note[2]}')
             new_title = input('Введите новый заголовок (оставьте пустым, чтобы оставить текущий): ')
-            new_body = input('Введите новое тело заметки (оставьте пустым, чтобы оставить текущее): ')
+            new_body = input('Введите новую заметку (оставьте пустым, чтобы оставить текущую): ')
+            new_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             if new_title:
                 note[1] = new_title
             if new_body:
                 note[2] = new_body
+            if new_body or new_title:
+                note[3] = new_time
             break
 
     if not found:
