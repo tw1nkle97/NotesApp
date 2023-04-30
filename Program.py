@@ -30,5 +30,41 @@ def read_note():
         for row in reader:
             print(row)
 
-add_note()
+
+def edit_note():
+    note_id = input('Введите ID заметки, которую хотите отредактировать: ')
+
+    notes = []
+    with open("NotesApp/notes.csv", "r") as file:
+        reader = csv.reader(file, delimiter=';')
+        for row in reader:
+            notes.append(row)
+
+    found = False
+    for note in notes:
+        if note[0] == note_id:
+            found = True
+            print(f'Заголовок: {note[1]}')
+            print(f'Тело заметки: {note[2]}')
+            new_title = input('Введите новый заголовок (оставьте пустым, чтобы оставить текущий): ')
+            new_body = input('Введите новое тело заметки (оставьте пустым, чтобы оставить текущее): ')
+            if new_title:
+                note[1] = new_title
+            if new_body:
+                note[2] = new_body
+            break
+
+    if not found:
+        print('Заметка с таким ID не найдена.')
+    else:
+        with open("NotesApp/notes.csv", "w", newline='') as file:
+            writer = csv.writer(file, delimiter=';')
+            for note in notes:
+                writer.writerow(note)
+
+        print('Заметка успешно отредактирована.')
+    
+
+read_note()
+edit_note()
 read_note()
