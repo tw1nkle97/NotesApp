@@ -90,3 +90,31 @@ def delete_note():
                 writer.writerow(note)
 
         print('Заметка удалена')
+
+
+def main_menu():
+    while True:
+        print("\nВыберите действие:")
+        print("1. Добавить заметку")
+        print("2. Читать заметки")
+        print("3. Редактировать заметку")
+        print("4. Удалить заметку")
+        print("5. Выход")
+
+        choice = input("Введите номер пункта: ")
+
+        if choice == '1':
+            add_note()
+        elif choice == '2':
+            read_note()
+        elif choice == '3':
+            edit_note()
+        elif choice == '4':
+            delete_note()
+        elif choice == '5':
+            break
+        else:
+            print("Неверный ввод. Попробуйте еще раз.")
+
+
+main_menu()
